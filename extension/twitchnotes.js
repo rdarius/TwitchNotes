@@ -1,16 +1,30 @@
-let mousePosition = { x: 0, y: 0 };
-let lastMousePosition = { x: 0, y: 0 };
-let openContainers = {};
-let isMouseDown = false;
-let activeContainer = null;
+let TN_mousePosition = { x: 0, y: 0 };
+let TN_lastMousePosition = { x: 0, y: 0 };
+let TN_openContainers = {};
+let TN_isMouseDown = false;
+let TN_activeContainer = null;
+let TN_settingsWindowOpen = false;
 
 document.addEventListener("mousemove", handleMouseMove);
 document.addEventListener("mouseup", handleMouseUp);
 
-function saveNote(username, note) {
-  let userList = JSON.parse(
-    localStorage.getItem("twitch-note-all-users-list") || "[]"
+function createSettingsButton(buttonContainer) {
+  const settingsButton = document.createElement("div");
+  settingsButton.innerHTML = "<b>Notes</b>";
+  settingsButton.addEventListener("click", () => {});
+
+  buttonContainer.lastChild.insertBefore(
+    settingsButton,
+    buttonContainer.lastChild.firstChild
   );
+}
+
+function getSavedUserList() {
+  return JSON.parse(localStorage.getItem("twitch-note-all-users-list") || "[]");
+}
+
+function addUserToSavedList(username) {
+  let userList = getSavedUserList();
 
   if (!userList.includes(username)) {
     userList.push(username);
@@ -19,7 +33,10 @@ function saveNote(username, note) {
       JSON.stringify(userList)
     );
   }
+}
 
+function saveNote(username, note) {
+  addUserToSavedList(username);
   localStorage.setItem("twitch-note-" + username, note);
 }
 function getNote(username) {
@@ -28,55 +45,55 @@ function getNote(username) {
 
 function handleMouseMove(event) {
   event = event || window.event;
-  if (isMouseDown) {
-    if (activeContainer) {
-      const dx = mousePosition.x - lastMousePosition.x;
-      const dy = mousePosition.y - lastMousePosition.y;
-      openContainers[activeContainer].style.top =
-        parseInt(openContainers[activeContainer].style.top) + dy + "px";
-      openContainers[activeContainer].style.left =
-        parseInt(openContainers[activeContainer].style.left) + dx + "px";
+  if (TN_isMouseDown) {
+    if (TN_activeContainer) {
+      const dx = TN_mousePosition.x - TN_lastMousePosition.x;
+      const dy = TN_mousePosition.y - TN_lastMousePosition.y;
+      TN_openContainers[TN_activeContainer].style.top =
+        parseInt(TN_openContainers[TN_activeContainer].style.top) + dy + "px";
+      TN_openContainers[TN_activeContainer].style.left =
+        parseInt(TN_openContainers[TN_activeContainer].style.left) + dx + "px";
     }
   }
   updateMousePosition(event.clientX, event.clientY);
 }
 
 function handleMouseUp(event) {
-  activeContainer = null;
-  isMouseDown = false;
+  TN_activeContainer = null;
+  TN_isMouseDown = false;
 }
 
 function updateMousePosition(x, y) {
-  lastMousePosition = { ...mousePosition };
-  mousePosition.x = x;
-  mousePosition.y = y;
+  TN_lastMousePosition = { ...TN_mousePosition };
+  TN_mousePosition.x = x;
+  TN_mousePosition.y = y;
 }
 
 function removeContainer(username) {
-  if (!openContainers[username]) return;
-  openContainers[username].remove();
-  delete openContainers[username];
+  if (!TN_openContainers[username]) return;
+  TN_openContainers[username].remove();
+  delete TN_openContainers[username];
 }
 
 function addContainer(username, container) {
-  if (openContainers[username]) return;
-  openContainers[username] = container;
+  if (TN_openContainers[username]) return;
+  TN_openContainers[username] = container;
   document.body.appendChild(container);
 }
 
 function openTwitchNote(username) {
   // CONTAINER
   const container = document.createElement("div");
-  container.style.left = mousePosition.x + "px";
-  container.style.top = mousePosition.y + 10 + "px";
+  container.style.left = TN_mousePosition.x + "px";
+  container.style.top = TN_mousePosition.y + 10 + "px";
   container.classList.add("twitch-note-container");
 
   // HEADER
   const header = document.createElement("div");
   header.classList.add("twitch-note-header");
   header.addEventListener("mousedown", function close() {
-    activeContainer = username;
-    isMouseDown = true;
+    TN_activeContainer = username;
+    TN_isMouseDown = true;
   });
   const closeButton = document.createElement("span");
   closeButton.classList.add("twitch-note-close-button");
@@ -134,13 +151,7 @@ function openTwitchNote(username) {
     )[0];
   } while (!buttonContainer || giveUpAt < Date.now());
 
-  const settingsButton = document.createElement("div");
-  settingsButton.innerHTML = "<b>Notes</b>";
-
-  buttonContainer.lastChild.insertBefore(
-    settingsButton,
-    buttonContainer.lastChild.firstChild
-  );
+  createSettingsButton(buttonContainer);
 
   // Options for the observer (which mutations to observe)
   const config = { attributes: true, childList: true, subtree: true };
