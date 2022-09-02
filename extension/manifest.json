@@ -1,0 +1,34 @@
+{
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_popup": "settings.html"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "exclude_matches": [
+        "*://*.twitch.tv/*.html",
+        "*://*.twitch.tv/*.html?*",
+        "*://*.twitch.tv/*.htm",
+        "*://*.twitch.tv/*.htm?*"
+      ],
+      "js": ["run.js"],
+      "matches": ["*://*.twitch.tv/*"]
+    }
+  ],
+  "description": "Add notes to twitch users",
+  "externally_connectable": {
+    "matches": ["*://*.twitch.tv/*"]
+  },
+  "homepage_url": "https://rdarius.lt/projects/chrome-extensions/twitch-notes",
+  "icons": {
+    "128": "icon.png"
+  },
+  "manifest_version": 2,
+  "name": "Twitch Notes",
+  "permissions": ["*://*.twitch.tv/*"],
+  "version": "0.0.1",
+  "web_accessible_resources": ["twitchnotes.js", "twitchnotes.css"]
+}
