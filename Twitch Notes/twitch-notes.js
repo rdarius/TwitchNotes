@@ -1,5 +1,4 @@
 (function runTwitchNotes() {
-  // Select the node that will be observed for mutations
 
   let mousePosition = { x: 0, y: 0 };
   let lastMousePosition = { x: 0, y: 0 };
@@ -162,7 +161,7 @@
     )[0];
   } while (!buttonContainer || giveUpAt < Date.now());
 
-  createSettingsButton(buttonContainer);
+  // createSettingsButton(buttonContainer);
 
   // Options for the observer (which mutations to observe)
   const config = { attributes: true, childList: true, subtree: true };

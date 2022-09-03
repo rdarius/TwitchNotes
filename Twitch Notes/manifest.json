@@ -18,7 +18,7 @@
       "matches": ["*://*.twitch.tv/*"]
     }
   ],
-  "description": "Add notes to twitch users",
+  "description": "Add notes to twitch users (only visible to you)",
   "externally_connectable": {
     "matches": ["*://*.twitch.tv/*"]
   },
@@ -29,6 +29,6 @@
   "manifest_version": 2,
   "name": "Twitch Notes",
   "permissions": ["*://*.twitch.tv/*"],
-  "version": "0.0.1",
+  "version": "0.0.0.1",
   "web_accessible_resources": ["twitch-notes.js", "twitch-notes.css"]
 }
