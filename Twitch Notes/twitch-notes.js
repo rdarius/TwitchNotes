@@ -161,7 +161,7 @@
     )[0];
   } while (!buttonContainer || giveUpAt < Date.now());
 
-  // createSettingsButton(buttonContainer);
+  createSettingsButton(buttonContainer);
 
   // Options for the observer (which mutations to observe)
   const config = { attributes: true, childList: true, subtree: true };
@@ -183,10 +183,10 @@
 
             const username = n.attributes["data-a-user"].value;
             if (username) {
-              let noteButton = usernameContainer.querySelector(".twitchnote");
+              let noteButton = usernameContainer.querySelector(".twitch-note");
               if (!noteButton) {
                 const twitchNote = document.createElement("span");
-                twitchNote.classList.add("twitchnote");
+                twitchNote.classList.add("twitch-note");
                 twitchNote.style.cursor = "pointer";
                 twitchNote.addEventListener("click", () => {
                   openTwitchNote(username);
