@@ -7,11 +7,6 @@
   --background-code: #1f1e1e;
 }
 
-.twitchnote img {
-  height: 18px;
-  padding: 0 4px 0;
-}
-
 .twitch-note-container {
   position: fixed;
   z-index: 1000000;
@@ -86,6 +81,29 @@
   text-transform: uppercase !important;
   text-align: center;
   line-height: 32px;
+}
+
+.twitch-notes-settings-button {
+  z-index: var(--z-index-default) !important;
+  position: relative !important;
+  background-color: var(--color-background-button-primary-default);
+  color: var(--color-text-button-primary);
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--border-radius-medium);
+  font-size: var(--button-text-default);
+  height: var(--button-size-default);
+  padding: 0 var(--button-padding-x);
 }
 
 .twitch-note-settings-container {
