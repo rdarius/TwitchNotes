@@ -22,10 +22,22 @@
                 localStorage.setItem(LS_UserList, JSON.stringify(userList));
             }
         },
+        removeUserFromSavedList: (username) => {
+            let userList = Notes.getSavedUserList();
+            userList = userList.filter(u => u !== username);
+            if (userList.length) {
+                localStorage.setItem(LS_UserList, JSON.stringify(userList));
+            } else {
+                localStorage.removeItem(LS_UserList);
+            }
+        },
         saveNote: (username, note) => {
-            console.log({username, note});
             Notes.addUserToSavedList(username);
             localStorage.setItem(LS_Prefix + username, note);
+        },
+        deleteNote: (username) => {
+            Notes.removeUserFromSavedList(username);
+            localStorage.removeItem(LS_Prefix + username);
         },
         getNote: (username) => {
             return localStorage.getItem(LS_Prefix + username) || "";
@@ -165,12 +177,6 @@
             const spacer = createElement('div', null, null, {height: '24px'});
             resultsContainer.appendChild(spacer);
 
-            /*
-            TODO: make popup to allow checking differences between existing notes and ones that would override them
-            TODO: allow to edit notes and select which one to keep after import, if any content was modified after opening comparison window show that record was merged as a status
-            TODO: show visually that records have some data that will be merged or overwritten entirely
-            */
-
             willBeOverwritten = willBeOverwritten.filter(x => !Notes.inputData.notes.find(n => n.user === x).resolved);
 
             const saveButton = createElement('button', 'Complete import', 'twitch-notes-settings-button',
@@ -238,7 +244,33 @@
             document.body.appendChild(blurredBackground);
         },
         clearAllData: () => {
-            console.log('TODO: Implement Notes Data Clearing');
+            const blurredBackground = createElement('div', null, 'twitch-notes-blurred-background');
+            const container = createElement('div', '<strong>This action will delete all saved notes!</strong><br /><br /><em>Consider exporting notes before performing this action in case you will need to use notes again</em>', 'twitch-notes-center-floating-container');
+
+            const spacer = createElement('div', null, null, {
+                height: '24px'
+            });
+            const deleteAction = createElement('button', 'DELETE ALL NOTES', 'twitch-notes-settings-button', {
+                background: 'red'
+            });
+            deleteAction.addEventListener('click', () => {
+                const users = Notes.getSavedUserList();
+                for(let user of users) {
+                    Notes.deleteNote(user);
+                }
+                blurredBackground.remove();
+            })
+            const cancelAction = createElement('button', 'Cancel', 'twitch-notes-settings-button');
+            cancelAction.addEventListener('click', () => {
+                blurredBackground.remove();
+            })
+
+            container.appendChild(spacer);
+            container.appendChild(deleteAction);
+            container.appendChild(cancelAction);
+
+            blurredBackground.appendChild(container);
+            document.body.appendChild(blurredBackground);
         },
         openAllNotes: () => {
             console.log('TODO: Implement Open All Notes functionality');
