@@ -285,3 +285,13 @@
     max-width: 90vw;
     overflow: auto;
 }
+
+.twitch-notes-user-list-user {
+    padding: 1rem;
+    border-bottom: var(--border-width-default) solid var(--color-border-base) !important;
+    cursor: pointer;
+}
+
+.twitch-notes-user-list-user[data-active] {
+    background: #772ce833;
+}

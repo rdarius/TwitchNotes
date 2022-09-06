@@ -51,6 +51,104 @@
                 settings: {},
             }));
         },
+        showAllNotes: () => {
+            let activeNote = null;
+            const blurredBackground = createElement('div', null, 'twitch-notes-blurred-background');
+            const container = createElement('div', null, 'twitch-notes-center-floating-container', {
+                padding: '0',
+                paddingTop: '1rem',
+                width: '100%',
+                height: 'calc(320px + 5rem)'
+            });
+            const closeButton = createElement('button', xButton, 'twitch-notes-settings-close-button', {
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
+            });
+
+            const title = createElement('div', 'Notes:', 'twitch-note-title', {
+                borderBottom: '1px solid #FFFFFF19',
+                paddingBottom: '1rem',
+            });
+            container.appendChild(title);
+
+            const content = createElement('div', null, null, {
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'no-wrap',
+                width: '100%',
+                height: '320px'
+            });
+            container.appendChild(content);
+            closeButton.addEventListener('click', () => {
+                blurredBackground.remove();
+            });
+            container.appendChild(closeButton);
+
+            const userList = createElement('div', null, null, {
+                borderRight: '1px solid #FFFFFF19',
+                height: '320px',
+                minWidth: '240px',
+                overflowY: 'auto',
+                overflowX: 'hidden',
+            });
+
+            const noteContainer = createElement('div', null, null, {
+                height: '320px',
+                padding: '1rem',
+                width: '100%',
+                opacity: '0',
+            });
+
+            const note = createElement('div', null, null, {
+                marginBottom: '3rem',
+                border: '1px solid #FFFFFF19',
+                height: 'calc(320px - 7rem)',
+                width: '100%',
+                padding: '6px',
+                outline: 'none',
+                overflowY: 'auto',
+                overflowX: 'hidden',
+            }, {
+                contentEditable: 'true',
+            });
+            const saveNote = createElement('button', 'Save Note', 'twitch-notes-settings-button', {
+                position: 'absolute',
+                bottom: '1rem',
+                left: '1rem'
+            });
+
+            saveNote.addEventListener('click', () => {
+                if(!activeNote) {
+                    return;
+                }
+                Notes.saveNote(activeNote, note.innerHTML);
+            })
+
+            for(let user of Notes.getSavedUserList()) {
+                const userLine = createElement('div', user, 'twitch-notes-user-list-user');
+                userLine.addEventListener('click', () => {
+                    const list = document.getElementsByClassName('twitch-notes-user-list-user');
+                    for(let i = 0; i < list.length; i++) {
+                        list.item(i).removeAttribute('data-active');
+                    }
+                    userLine.setAttribute('data-active', 'true');
+                    noteContainer.style.opacity = '1';
+                    note.innerHTML = Notes.getNote(user);
+                    activeNote = user;
+                });
+                userList.appendChild(userLine);
+            }
+
+            noteContainer.appendChild(note);
+            noteContainer.appendChild(saveNote);
+
+            content.appendChild(userList);
+            content.appendChild(noteContainer);
+
+            blurredBackground.appendChild(container);
+            document.body.appendChild(blurredBackground);
+        },
         importNotesConflictResolve: (user, resultsContainer, container, blurredBackground) => {
             const diffBlurredBackground = createElement('div', null, 'twitch-notes-blurred-background');
             const diffContainer = createElement('div', '<strong>Select which note to keep for <em>' + user + '</em></strong><br /><em>You can modify notes to merge them and keep updated one</em><br /><br />', 'twitch-notes-center-floating-container');
@@ -65,7 +163,8 @@
             const valueStyle = {
                 minWidth: '320px',
                 padding: '6px',
-                border: '1px solid #FFFFFF19'
+                border: '1px solid #FFFFFF19',
+                outline: 'none',
             };
             const valueAttr = {contentEditable: 'true'};
 
@@ -273,7 +372,7 @@
             document.body.appendChild(blurredBackground);
         },
         openAllNotes: () => {
-            console.log('TODO: Implement Open All Notes functionality');
+            Notes.showAllNotes();
         }
     }
 
@@ -507,10 +606,10 @@
             const openAllNotes = createChatSettingsLine('View All Notes');
             settingsContent.appendChild(openAllNotes);
 
-            exportNotes.addEventListener('click', Notes.exportNotes);
-            importNotes.addEventListener('click', Notes.importNotes);
-            clearData.addEventListener('click', Notes.clearAllData);
-            openAllNotes.addEventListener('click', Notes.openAllNotes);
+            exportNotes.addEventListener('click', () => {Notes.exportNotes(); toggleSettings()});
+            importNotes.addEventListener('click', () => {Notes.importNotes(); toggleSettings()});
+            clearData.addEventListener('click', () => {Notes.clearAllData(); toggleSettings()});
+            openAllNotes.addEventListener('click', () => {Notes.openAllNotes(); toggleSettings()});
 
 
             settingsPopover.appendChild(settingsScrollableArea);
@@ -532,7 +631,6 @@
             settingsWindow.style.display = 'block';
             settingsWindowOpen = true;
         }
-        console.log('toggle settings');
     }
 
     const xButton = `<svg width="100%" height="100%" viewBox="0 0 20 20" x="0px" y="0px" class="twitch-notes-x-button"><g><path d="M8.5 10L4 5.5 5.5 4 10 8.5 14.5 4 16 5.5 11.5 10l4.5 4.5-1.5 1.5-4.5-4.5L5.5 16 4 14.5 8.5 10z"></path></g></svg>`;
