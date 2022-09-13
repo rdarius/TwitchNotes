@@ -1,0 +1,297 @@
+.twitch-note-container {
+  position: fixed;
+  z-index: 1000000;
+  min-width: 420px;
+  max-width: 95vw;
+  min-height: 240px;
+  max-height: 50vh;
+  background: var(--color-background-base);
+  border: var(--border-width-default) solid var(--color-border-base) !important;
+}
+
+.twitch-note-header {
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  border-bottom: var(--border-width-default) solid var(--color-border-base) !important;
+  position: relative;
+  cursor: move;
+}
+
+.twitch-note-title {
+  color: var(--color-text-alt) !important;
+  font-size: var(--font-size-6) !important;
+  font-weight: var(--font-weight-semibold) !important;
+  text-transform: uppercase !important;
+  padding-left: calc((32px - var(--font-size-6)) / 2);
+}
+
+.twitch-note-close-button {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  aspect-ratio: 1;
+  color: var(--color-text-alt) !important;
+  font-size: var(--font-size-6) !important;
+  font-weight: var(--font-weight-semibold) !important;
+  text-transform: uppercase !important;
+  cursor: pointer;
+}
+
+.twitch-note-content {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  right: 0;
+  bottom: 32px;
+  background: transparent;
+  color: var(--color-text-base) !important;
+  font-family: var(--font-base);
+  vertical-align: baseline;
+  outline: none;
+  overflow: auto;
+  padding: calc((32px - var(--font-size-6)) / 2);
+}
+
+.twitch-note-save-button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  border-top: var(--border-width-default) solid var(--color-border-base) !important;
+  cursor: pointer;
+  color: var(--color-text-alt) !important;
+  font-size: var(--font-size-6) !important;
+  font-weight: var(--font-weight-semibold) !important;
+  text-transform: uppercase !important;
+  text-align: center;
+  line-height: 32px;
+}
+
+.twitch-notes-settings-button {
+  z-index: var(--z-index-default) !important;
+  position: relative !important;
+  background-color: var(--color-background-button-primary-default);
+  color: var(--color-text-button-primary);
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--border-radius-medium);
+  font-size: var(--button-text-default);
+  height: var(--button-size-default);
+  padding: 0 var(--button-padding-x);
+}
+
+.twitch-notes-settings-container {
+  border: 0;
+  font: inherit;
+  padding: 0;
+  vertical-align: baseline;
+  position: fixed;
+  z-index: var(--z-index-balloon);
+  inset: auto 0 0 auto;
+  margin: 0 69px 48px 0;
+}
+
+.twitch-notes-settings-balloon {
+  display: inline-block;
+  max-width: 90vw;
+  min-width: 0;
+  white-space: nowrap;
+  border-radius: 0.6rem !important;
+  background-color: var(--color-background-base) !important;
+  box-shadow: var(--shadow-elevation-2) !important;
+  color: inherit !important;
+}
+
+.twitch-notes-settings-popover {
+  white-space: normal;
+  width: 32rem;
+}
+
+.twitch-notes-settings-header {
+  display: flex !important;
+  -webkit-box-align: center !important;
+  align-items: center !important;
+  position: relative !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  background-color: var(--color-background-base) !important;
+  min-height: 4rem;
+}
+
+.twitch-notes-settings-header-left-element {
+  left: 0 !important;
+  margin-right: 0.5rem !important;
+  width: 3rem;
+}
+
+.twitch-notes-settings-header-center-element {
+  -webkit-box-align: center !important;
+  align-items: center !important;
+  display: flex !important;
+  text-align: center !important;
+  -webkit-box-flex: 1 !important;
+  flex-grow: 1 !important;
+  -webkit-box-pack: center !important;
+  justify-content: center !important;
+}
+
+.twitch-notes-settings-header-center-element-content {
+  line-height: 1.5;
+  color: var(--color-text-alt) !important;
+  font-size: var(--font-size-5) !important;
+  font-weight: var(--font-weight-semibold) !important;
+}
+
+
+.twitch-notes-settings-header-right-element {
+  right: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+.twitch-notes-settings-close-button {
+  cursor: default;
+  text-transform: none;
+  text-indent: 0;
+  text-shadow: none;
+  letter-spacing: normal;
+  text-rendering: auto;
+  appearance: auto;
+  writing-mode: horizontal-tb !important;
+  box-sizing: border-box;
+  margin: 0;
+  font: inherit;
+  border: none;
+  font-size: var(--button-text-default);
+  font-weight: var(--font-weight-semibold);
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  border-radius: var(--border-radius-medium);
+  height: calc(var(--button-size-default) - 1rem);
+  width: calc(var(--button-size-default) - 1rem);
+  background-color: var(--color-background-button-text-default);
+  color: var(--color-fill-button-icon);
+}
+
+.twitch-notes-settings-scrollable-area {
+  display: flex;
+  overflow: hidden;
+  z-index: 0;
+  height: 100%;
+  position: relative;
+  max-height: 478px;
+}
+
+.twitch-notes-settings-content {
+  box-sizing: content-box;
+  min-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: inherit !important;
+  margin: 1rem;
+  padding-bottom: 0 !important;
+}
+
+.twitch-notes-settings-option-line {
+  position: relative !important;
+  width: calc(100% - 2rem) !important;
+}
+
+.twitch-notes-settings-option-line-button {
+  border-radius: var(--border-radius-medium);
+  display: block;
+  width: 100%;
+  color: inherit;
+}
+
+.twitch-notes-settings-option-line-button:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  background-color: var(--color-background-interactable-hover);
+}
+
+.twitch-notes-settings-option-line-button-container {
+  display: flex !important;
+  -webkit-box-align: center !important;
+  align-items: center !important;
+  position: relative !important;
+  padding: 0.5rem !important;
+}
+
+.twitch-notes-settings-option-line-button-container-content {
+  -webkit-box-flex: 1 !important;
+  flex-grow: 1 !important;
+}
+
+.twitch-note-settings-separator {
+  border-top: 1px solid var(--color-border-base);
+  margin-top: 1rem !important;
+  margin-left: 0.5rem !important;
+  margin-right: 0.5rem !important;
+  padding-bottom: 1rem !important;
+}
+
+.twitch-notes-x-button {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  top: 0;
+  fill: currentcolor;
+}
+
+.twitch-notes-blurred-background {
+  position: fixed;
+  inset: 0 0 0 0;
+  z-index: 2000000;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+}
+
+.twitch-notes-center-floating-container {
+  background: var(--color-background-base);
+  border: var(--border-width-default) solid var(--color-border-base) !important;
+  padding: 4rem 2rem 2rem;
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  max-height: 90vh;
+  max-width: 90vw;
+  overflow: auto;
+}
+
+.twitch-notes-user-list-user {
+  padding: 1rem;
+  border-bottom: var(--border-width-default) solid var(--color-border-base) !important;
+  cursor: pointer;
+}
+
+.twitch-notes-user-list-user[data-active] {
+  background: #772ce833;
+}
