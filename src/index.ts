@@ -1,5 +1,6 @@
 import './styles/main.scss';
 import TwitchNote from "./TwitchNote";
+import Mouse from "./Mouse";
 
 const ChatContainerClass = 'chat-scrollable-area__message-container';
 const twitchNote = new TwitchNote();
@@ -24,6 +25,7 @@ function init() {
             if (!chatExists) {
                 // chat container appeared
                 twitchNote.init(targetNode);
+                Mouse.setupListeners();
             }
             chatExists = true;
         } else {
