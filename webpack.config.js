@@ -8,7 +8,7 @@ module.exports = {
         twitchNotes: path.resolve(__dirname, 'src/index.ts'),
     },
     output: {
-        path: path.resolve(__dirname, 'Twitch Notes'),
+        path: path.resolve(__dirname, 'extension'),
         filename: "twitch-notes.js",
         assetModuleFilename: "[name][ext]"
     },
