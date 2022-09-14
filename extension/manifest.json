@@ -28,7 +28,7 @@
   },
   "manifest_version": 3,
   "name": "Twitch Notes",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "web_accessible_resources": [
     {
       "resources": [
