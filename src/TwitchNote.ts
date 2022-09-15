@@ -5,7 +5,8 @@ import {
     CustomSpanElement
 } from "./CustomHTMLElement";
 import {ELEMENT_ButtonContainer} from "./const";
-import {openTwitchNote, toggleSettingsList} from "./HTMLTemplates";
+import toggleSettingsList from "./toggleSettingsList";
+import openTwitchNote from "./openTwitchNote";
 
 export default class TwitchNote {
 

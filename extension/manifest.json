@@ -40,5 +40,5 @@
       ]
     }
   ],
-  "permissions": ["webNavigation", "webRequest"]
+  "permissions": ["webNavigation"]
 }

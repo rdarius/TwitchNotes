@@ -4,7 +4,8 @@
   "description": "Add notes to twitch users (only visible to you)",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "zip": "cd extension && zip ../twitchNotes.zip ./*"
   },
   "repository": {
     "type": "git",
