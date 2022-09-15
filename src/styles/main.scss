@@ -76,7 +76,7 @@
 .twitch-notes-settings-button {
   z-index: var(--z-index-default) !important;
   position: relative !important;
-  background-color: var(--color-background-button-primary-default);
+  background-color: transparent;
   color: var(--color-text-button-primary);
   text-decoration: none;
   cursor: pointer;
@@ -90,6 +90,7 @@
   white-space: nowrap;
   user-select: none;
   font-weight: var(--font-weight-semibold);
+  border: 2px solid var(--color-text-button-primary);
   border-radius: var(--border-radius-medium);
   font-size: var(--button-text-default);
   height: var(--button-size-default);
