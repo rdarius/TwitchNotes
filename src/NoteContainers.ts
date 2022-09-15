@@ -1,11 +1,11 @@
-import {CustomHTMLElement} from "./CustomHTMLElement";
+import HTMLBuilder from "./HTMLBuilder";
 
-const containers: {[key: string]: CustomHTMLElement} = {};
+const containers: {[key: string]: HTMLBuilder} = {};
 
 export default {
     activeContainer: '',
     containers,
-    addContainer(username: string, container: CustomHTMLElement) {
+    addContainer(username: string, container: HTMLBuilder) {
         if (this.containers[username]) return;
         this.containers[username] = container;
     },

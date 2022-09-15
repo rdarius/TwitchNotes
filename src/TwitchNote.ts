@@ -1,12 +1,7 @@
-import {
-    CustomButtonElement,
-    CustomDivElement,
-    CustomImgElement,
-    CustomSpanElement
-} from "./CustomHTMLElement";
-import {ELEMENT_ButtonContainer} from "./const";
+import { ELEMENT_ButtonContainer } from "./const";
 import toggleSettingsList from "./toggleSettingsList";
 import openTwitchNote from "./openTwitchNote";
+import HTMLBuilder from "./HTMLBuilder";
 
 export default class TwitchNote {
 
@@ -60,26 +55,41 @@ export default class TwitchNote {
             return;
         }
 
-        const container1 = new CustomDivElement();
-        container1.setStyle({marginLeft: "0.5rem !important"});
-        const container2 = new CustomDivElement();
-        container1.setStyle({display: "inline-flex !important"});
-        const settingsButton = new CustomButtonElement('twitch-notes-settings-button', 'Notes');
-
-        settingsButton.setClickListener(() => {
-            toggleSettingsList();
+        const btn = new HTMLBuilder({
+            element: 'div',
+            style: {
+                marginLeft: "0.5rem !important"
+            },
+            content: [
+                {
+                    element: 'div',
+                    style: {
+                        display: "inline-flex !important"
+                    },
+                    content: [
+                        {
+                            element: 'button',
+                            class: [
+                                'twitch-notes-settings-button',
+                                'twitch-notes-settings-button__outline'
+                            ],
+                            content: [
+                                'Notes'
+                            ],
+                            mouseClickEvent: () => toggleSettingsList(),
+                        }
+                    ]
+                }
+            ]
         });
-
-        container2.appendCustomChild(settingsButton);
-        container1.appendCustomChild(container2);
 
         if (buttonContainer.lastChild) {
             buttonContainer.lastChild.insertBefore(
-                container1.getElement(),
+                btn.getElement(),
                 buttonContainer.lastChild.lastChild
             );
         } else {
-            buttonContainer.appendChild(container1.getElement());
+            buttonContainer.appendChild(btn.getElement());
         }
     }
 
@@ -96,15 +106,27 @@ export default class TwitchNote {
             if (username) {
                 let noteButton = usernameContainer.querySelector(".twitch-note");
                 if (!noteButton) {
-                    const twitchNote = new CustomSpanElement('twitch-note');
-                    twitchNote.setStyle({cursor: 'pointer'});
-                    twitchNote.setClickListener(() => {
-                        openTwitchNote(username);
+                    const twitchNote = new HTMLBuilder({
+                        element: 'span',
+                        class: 'twitch-note',
+                        style: {
+                            cursor: 'pointer',
+                        },
+                        mouseClickEvent: () => openTwitchNote(username),
+                        content: [
+                            {
+                                element: 'img',
+                                style: {
+                                    height: '18px',
+                                    paddingRight: '4px'
+                                },
+                                attributes: {
+                                    src: 'https://cdn.rdarius.lt/icons/32-id-card.png'
+                                }
+                            }
+                        ]
                     });
-                    const img = new CustomImgElement();
-                    img.setStyle({height: '18px', paddingRight: '4px'});
-                    img.addAttribute('src', 'https://cdn.rdarius.lt/icons/32-id-card.png');
-                    twitchNote.appendCustomChild(img);
+
                     usernameContainer.insertBefore(
                         twitchNote.getElement(),
                         usernameContainer.firstChild

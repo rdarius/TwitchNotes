@@ -1,43 +1,67 @@
 import NoteContainers from "./NoteContainers";
-import {CustomDivElement, CustomSpanElement} from "./CustomHTMLElement";
 import Mouse from "./Mouse";
 import NoteStorage from "./NoteStorage";
-import {getCloseButtonSVG} from "./HTMLTemplates";
+import { getCloseButtonSVG } from "./HTMLTemplates";
+import {HTMLBuilderBlock} from "./types";
+import HTMLBuilder from "./HTMLBuilder";
 
 export default function openTwitchNote(username: string) {
     if (NoteContainers.containers[username]) return;
-    const container = new CustomDivElement('twitch-note-container');
-    container.setStyle({
-        left: Mouse.mousePosition.x + 'px',
-        top: Mouse.mousePosition.y + 10 + 'px'
-    });
+    let noteContent = NoteStorage.getNote(username);
+    const container: HTMLBuilderBlock = {
+        element: 'div',
+        class: 'twitch-note-container',
+        style: {
+            left: Mouse.mousePosition.x + 'px',
+            top: Mouse.mousePosition.y + 10 + 'px'
+        },
+        content: [
+            {
+                element: 'div',
+                class: 'twitch-note-header',
+                mouseDownEvent: () => {
+                    NoteContainers.activeContainer = username;
+                    Mouse.isMouseDown = true;
+                },
+                content: [
+                    {
+                        element: 'span',
+                        class: 'twitch-note-close-button',
+                        content: [getCloseButtonSVG()],
+                        mouseClickEvent: () => NoteContainers.removeContainer(username),
+                    },
+                    {
+                        element:  'span',
+                        class: 'twitch-note-title',
+                        content: [username],
+                    }
+                ]
+            },
+            {
+                element: 'div',
+                class: 'twitch-note-content',
+                content: [NoteStorage.getNote(username)],
+                attributes: {
+                    contentEditable: 'true'
+                },
+                keyUpEvent: (newContent: string) => {
+                    noteContent = newContent;
+                }
+            },
+            {
+                element: 'div',
+                class: 'twitch-note-save-button',
+                content: ['SAVE'],
+                mouseClickEvent: () => {
+                    NoteStorage.saveNote(username, noteContent);
+                    NoteContainers.removeContainer(username);
+                }
+            }
+        ]
+    };
 
-    const header = new CustomDivElement('twitch-note-header');
-    header.setMouseDownListener(() => {
-        NoteContainers.activeContainer = username;
-        Mouse.isMouseDown = true;
-    });
+    const containerElement = new HTMLBuilder(container);
 
-    const closeButton = new CustomSpanElement('twitch-note-close-button', getCloseButtonSVG());
-    closeButton.setClickListener(() => {
-        NoteContainers.removeContainer(username);
-    });
-
-    const title = new CustomSpanElement('twitch-note-title', username);
-    const content = new CustomDivElement('twitch-note-content', NoteStorage.getNote(username));
-    content.addAttribute('contentEditable', 'true');
-
-    const saveButton = new CustomDivElement('twitch-note-save-button', 'SAVE');
-    saveButton.setClickListener(() => {
-        NoteStorage.saveNote(username, content.getElement().innerHTML);
-        NoteContainers.removeContainer(username);
-    });
-
-    header.appendCustomChild(closeButton);
-    header.appendCustomChild(title);
-    container.appendCustomChild(header);
-    container.appendCustomChild(content);
-    container.appendCustomChild(saveButton);
-    document.body.appendChild(container.getElement());
-    NoteContainers.addContainer(username, container);
+    document.body.appendChild(containerElement.getElement());
+    NoteContainers.addContainer(username, containerElement);
 }

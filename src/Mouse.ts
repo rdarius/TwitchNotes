@@ -32,7 +32,7 @@ export default class Mouse {
             if (NoteContainers.activeContainer) {
                 const dx = Mouse.mousePosition.x - Mouse.lastMousePosition.x;
                 const dy = Mouse.mousePosition.y - Mouse.lastMousePosition.y;
-                NoteContainers.containers[NoteContainers.activeContainer].setStyle({
+                NoteContainers.containers[NoteContainers.activeContainer].setStyles({
                     top: parseInt(NoteContainers.containers[NoteContainers.activeContainer].getElement().style.top) + dy + "px",
                     left: parseInt(NoteContainers.containers[NoteContainers.activeContainer].getElement().style.left) + dx + "px",
                 });

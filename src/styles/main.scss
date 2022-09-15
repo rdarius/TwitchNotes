@@ -76,7 +76,7 @@
 .twitch-notes-settings-button {
   z-index: var(--z-index-default) !important;
   position: relative !important;
-  background-color: transparent;
+  background-color: var(--color-background-button-primary-default);
   color: var(--color-text-button-primary);
   text-decoration: none;
   cursor: pointer;
@@ -90,11 +90,15 @@
   white-space: nowrap;
   user-select: none;
   font-weight: var(--font-weight-semibold);
-  border: 2px solid var(--color-text-button-primary);
   border-radius: var(--border-radius-medium);
   font-size: var(--button-text-default);
   height: var(--button-size-default);
   padding: 0 var(--button-padding-x);
+
+  &__outline {
+    background: transparent;
+    border: 2px solid var(--color-text-button-primary);
+  }
 }
 
 .twitch-notes-settings-container {

@@ -1,13 +1,31 @@
-import {CustomButtonElement, CustomDivElement} from "./CustomHTMLElement";
+import {HTMLBuilderBlock} from "./types";
 
-export default function createChatSettingsLine(text: string) {
-    const element = new CustomDivElement('twitch-notes-settings-option-line');
-    const button = new CustomButtonElement('twitch-notes-settings-option-line-button');
-    const buttonContainer = new CustomDivElement('twitch-notes-settings-option-line-button-container');
-    const buttonContainerContent = new CustomDivElement('twitch-notes-settings-option-line-button-container-content', text);
+export default function createChatSettingsLine(text: string, cb?: Function): HTMLBuilderBlock {
 
-    buttonContainer.appendCustomChild(buttonContainerContent);
-    button.appendCustomChild(buttonContainer);
-    element.appendCustomChild(button);
-    return element;
+    return {
+        element: 'div',
+        class: 'twitch-notes-settings-option-line',
+        content: [
+            {
+                element: 'button',
+                class: 'twitch-notes-settings-option-line-button',
+                content: [
+                    {
+                        element: 'div',
+                        class: 'twitch-notes-settings-option-line-button-container',
+                        content: [
+                            {
+                                element: 'div',
+                                class: 'twitch-notes-settings-option-line-button-container-content',
+                                content: [
+                                    text
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        mouseClickEvent: () => cb ? cb() : () => {},
+    };
 }
