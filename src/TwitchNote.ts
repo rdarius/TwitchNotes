@@ -2,14 +2,13 @@ import { ELEMENT_ButtonContainer } from "./const";
 import toggleSettingsList from "./toggleSettingsList";
 import openTwitchNote from "./openTwitchNote";
 import HTMLBuilder from "./HTMLBuilder";
+import TwitchButton from "./HTMLElements/TwitchButton";
+import TwitchNotesWindow from "./HTMLElements/TwitchNotesWindow";
 
 export default class TwitchNote {
 
-    observer: MutationObserver | null = null;
+    observer?: MutationObserver;
     chatContainerNode?: Element;
-
-    constructor() {
-    }
 
     init(chatContainerNode: Element) {
         this.chatContainerNode = chatContainerNode;
@@ -55,41 +54,16 @@ export default class TwitchNote {
             return;
         }
 
-        const btn = new HTMLBuilder({
-            element: 'div',
-            style: {
-                marginLeft: "0.5rem !important"
-            },
-            content: [
-                {
-                    element: 'div',
-                    style: {
-                        display: "inline-flex !important"
-                    },
-                    content: [
-                        {
-                            element: 'button',
-                            class: [
-                                'twitch-notes-settings-button',
-                                'twitch-notes-settings-button__outline'
-                            ],
-                            content: [
-                                'Notes'
-                            ],
-                            mouseClickEvent: () => toggleSettingsList(),
-                        }
-                    ]
-                }
-            ]
-        });
+        const button = new TwitchButton('Notes', 'outline');
+        button.onClick(TwitchNotesWindow.toggle);
 
         if (buttonContainer.lastChild) {
             buttonContainer.lastChild.insertBefore(
-                btn.getElement(),
+                button.element,
                 buttonContainer.lastChild.lastChild
             );
         } else {
-            buttonContainer.appendChild(btn.getElement());
+            buttonContainer.appendChild(button.element);
         }
     }
 

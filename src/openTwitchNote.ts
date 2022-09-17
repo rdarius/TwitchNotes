@@ -10,7 +10,7 @@ export default function openTwitchNote(username: string) {
     let noteContent = NoteStorage.getNote(username);
     const container: HTMLBuilderBlock = {
         element: 'div',
-        class: 'twitch-note-container',
+        class: 'twitch-notes-floating-container',
         style: {
             left: Mouse.mousePosition.x + 'px',
             top: Mouse.mousePosition.y + 10 + 'px'
@@ -18,7 +18,7 @@ export default function openTwitchNote(username: string) {
         content: [
             {
                 element: 'div',
-                class: 'twitch-note-header',
+                class: 'twitch-notes-header',
                 mouseDownEvent: () => {
                     NoteContainers.activeContainer = username;
                     Mouse.isMouseDown = true;
@@ -26,20 +26,20 @@ export default function openTwitchNote(username: string) {
                 content: [
                     {
                         element: 'span',
-                        class: 'twitch-note-close-button',
+                        class: 'twitch-notes-close-button',
                         content: [getCloseButtonSVG()],
                         mouseClickEvent: () => NoteContainers.removeContainer(username),
                     },
                     {
                         element:  'span',
-                        class: 'twitch-note-title',
+                        class: 'twitch-notes-title',
                         content: [username],
                     }
                 ]
             },
             {
                 element: 'div',
-                class: 'twitch-note-content',
+                class: 'twitch-notes-content',
                 content: [NoteStorage.getNote(username)],
                 attributes: {
                     contentEditable: 'true'
@@ -50,7 +50,7 @@ export default function openTwitchNote(username: string) {
             },
             {
                 element: 'div',
-                class: 'twitch-note-save-button',
+                class: 'twitch-notes-save-button',
                 content: ['SAVE'],
                 mouseClickEvent: () => {
                     NoteStorage.saveNote(username, noteContent);

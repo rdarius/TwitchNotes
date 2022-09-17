@@ -11,10 +11,11 @@ export default class HTMLBuilder {
         if (data.attributes)  this.setAttributes(data.attributes);
         if (data.style) this.setStyles(data.style);
         if (data.mouseClickEvent) this.setMouseClickListener(data.mouseClickEvent);
-        if (data.mouseMoveEvent) this.setMouseClickListener(data.mouseMoveEvent);
-        if (data.mouseDownEvent) this.setMouseClickListener(data.mouseDownEvent);
-        if (data.mouseUpEvent) this.setMouseClickListener(data.mouseUpEvent);
+        if (data.mouseMoveEvent) this.setMouseMoveListener(data.mouseMoveEvent);
+        if (data.mouseDownEvent) this.setMouseDownListener(data.mouseDownEvent);
+        if (data.mouseUpEvent) this.setMouseUpListener(data.mouseUpEvent);
         if (data.keyUpEvent) this.setKeyUpListener(data.keyUpEvent);
+        if (data.changeListener) this.setChangeListener(data.changeListener);
         if (data.content) this.setContent(data.content);
     }
 
@@ -61,18 +62,22 @@ export default class HTMLBuilder {
         this.element.addEventListener('click', () => cb());
     }
 
-    setContent(content: (HTMLBuilderBlock|string)[]) {
+    setContent(content: (HTMLBuilderBlock|string|HTMLElement)[]) {
         for (let block of content) {
             this.addContent(block);
         }
     }
 
-    addContent(content: HTMLBuilderBlock|string) {
+    addContent(content: HTMLBuilderBlock|string|HTMLElement) {
         if (typeof content === 'string') {
             this.element.innerHTML += content;
         } else {
-            const el = new HTMLBuilder(content);
-            this.element.appendChild(el.element)
+            if (content instanceof HTMLElement) {
+                this.element.appendChild(content);
+            } else {
+                const el = new HTMLBuilder(content);
+                this.element.appendChild(el.element)
+            }
         }
     }
 
@@ -90,6 +95,10 @@ export default class HTMLBuilder {
 
     setKeyUpListener(cb: Function) {
         this.element.addEventListener('keyup', () => cb(this.element.innerHTML));
+    }
+
+    setChangeListener(cb: Function) {
+        this.element.addEventListener('change', (e) => cb(e));
     }
 
     getElement() {

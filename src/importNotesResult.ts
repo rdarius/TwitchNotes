@@ -1,8 +1,10 @@
-import {CustomAElement, CustomButtonElement, CustomDivElement, CustomHTMLElement} from "./CustomHTMLElement";
 import NoteStorage from "./NoteStorage";
 import importNotesConflictResolve from "./importNotesConflictResolve";
+import HTMLBuilder from "./HTMLBuilder";
+import TwitchButton from "./HTMLElements/TwitchButton";
+import TwitchNotesImportResolve from "./HTMLElements/TwitchNotesImportResolve";
 
-export default function importNotesResult(container: CustomHTMLElement, blurredBackground: CustomHTMLElement) {
+export default function importNotesResult(container: HTMLElement, blurredBackground: HTMLElement, cb?: Function) {
     const willBeAdded = [];
     let willBeOverwritten = [];
     const noChanges = [];
@@ -19,71 +21,85 @@ export default function importNotesResult(container: CustomHTMLElement, blurredB
         }
     }
 
-    const resultsContainer = new CustomDivElement();
+    const resultsContainer = new HTMLBuilder({
+        element: 'div',
+        style: {
+            padding: '1rem'
+        }
+    });
 
     if (willBeOverwritten.length) {
-        const overwrittenContainer = new CustomDivElement('', '<strong>Note conflicts found for:</strong><br />');
-        overwrittenContainer.setStyle({marginTop: '1rem'});
+        const overwrittenContainer = new HTMLBuilder({
+            element: 'div',
+            content: ['<strong>Note conflicts found for:</strong><br />'],
+            style: {
+                marginTop: '1rem',
+            }
+        });
 
         for (let item of willBeOverwritten) {
-            const row = new  CustomDivElement('', item + ' ');
             const isResolved = NoteStorage.inputData.notes.find(note => note.user === item)?.resolved;
-            row.setStyle({
-                color: isResolved ? 'green' : 'red',
+            overwrittenContainer.addContent({
+                element: 'div',
+                content: [item + ' ', {
+                    element: 'a',
+                    content: [isResolved ? '[update]' : '[resolve]'],
+                    style: {
+                        cursor: 'pointer',
+                    },
+                    mouseClickEvent: () => {
+                        TwitchNotesImportResolve.open(item, container, blurredBackground);
+                        // importNotesConflictResolve(item, resultsContainer, container, blurredBackground);
+                    }
+                }],
+                style: {
+                    color: isResolved ? 'green' : 'red',
+                }
             });
-            const resolve = new CustomAElement('', isResolved ? '[update]' : '[resolve]');
-            resolve.setStyle({
-                cursor: 'pointer'
-            });
-
-            resolve.setClickListener(() => {
-                importNotesConflictResolve(item, resultsContainer, container, blurredBackground);
-            })
-            row.appendCustomChild(resolve);
-            overwrittenContainer.appendCustomChild(row);
         }
-        resultsContainer.appendCustomChild(overwrittenContainer);
+        resultsContainer.addContent(overwrittenContainer.getElement());
     }
 
     if (willBeAdded.length) {
-        const addedContainer = new CustomDivElement('', '<strong>Note will be added for:</strong><br />' + willBeAdded.join('<br />'));
-        addedContainer.setStyle({
-            marginTop: '1rem',
-            color: 'white'
+        resultsContainer.addContent({
+            element: 'div',
+            content: ['<strong>Note will be added for:</strong><br />' + willBeAdded.join('<br />')],
+            style: {
+                marginTop: '1rem',
+                color: 'white'
+            }
         });
-        resultsContainer.appendCustomChild(addedContainer);
     }
 
     if (noChanges.length) {
-        const noChangesContainer = new CustomDivElement('', '<strong>No changes for:</strong><br />' + noChanges.join('<br />'));
-        noChangesContainer.setStyle({
-            marginTop: '1rem',
-            color: 'gray'
+        resultsContainer.addContent({
+            element: 'div',
+            content: ['<strong>No changes for:</strong><br />' + noChanges.join('<br />')],
+            style: {
+                marginTop: '1rem',
+                color: 'gray'
+            }
         });
-        resultsContainer.appendCustomChild(noChangesContainer);
     }
 
-    const spacer = new CustomDivElement();
-    spacer.setStyle({height: '24px'});
-    resultsContainer.appendCustomChild(spacer);
+    resultsContainer.addContent({element: 'div', style: {height: '24px'}});
 
     willBeOverwritten = willBeOverwritten.filter(x => !NoteStorage.inputData.notes.find(n => n.user === x)?.resolved);
 
-    const saveButton = new CustomButtonElement('twitch-notes-settings-button', 'Complete import');
-    saveButton.setStyle({})
-    if (willBeOverwritten.length > 0) saveButton.setStyle({background: 'gray'});
-    if (willBeOverwritten.length > 0) saveButton.addAttribute('disabled', 'true');
+    const saveButton = new TwitchButton('Complete import');
+    if (willBeOverwritten.length > 0) saveButton.element.style.background = 'gray';
+    if (willBeOverwritten.length > 0) saveButton.element.setAttribute('disabled', 'true');
 
-    resultsContainer.appendCustomChild(saveButton)
+    resultsContainer.addContent(saveButton.element)
 
     if (willBeOverwritten.length > 0) {
-        const note = new CustomDivElement('', '<em>Import cannot be completed while there are unresolved conflicts</em>');
-        note.setStyle({
-            color: 'gray',
+        resultsContainer.addContent({
+            element: 'div',
+            content: ['<em>Import cannot be completed while there are unresolved conflicts</em>'],
+            style: {color: 'gray'}
         });
-        resultsContainer.appendCustomChild(note);
     } else {
-        saveButton.setClickListener(() => {
+        saveButton.element.addEventListener('click', () => {
             for (let note of NoteStorage.inputData.notes) {
                 NoteStorage.saveNote(note.user, note.note);
             }
@@ -93,8 +109,10 @@ export default function importNotesResult(container: CustomHTMLElement, blurredB
                 notes: [],
                 settings: {},
             };
+            cb ? cb() : () => {};
         });
     }
 
-    container.appendCustomChild(resultsContainer);
+    container.innerHTML = '';
+    container.appendChild(resultsContainer.getElement());
 }

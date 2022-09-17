@@ -39,6 +39,5 @@
         "*://*.twitch.tv/*"
       ]
     }
-  ],
-  "permissions": ["webNavigation"]
+  ]
 }

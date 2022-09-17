@@ -18,7 +18,7 @@ export default class Mouse {
     }
 
     static handleMouseUp() {
-        NoteContainers.activeContainer = '';
+        NoteContainers.activeContainer = null;
         Mouse.isMouseDown = false;
     }
 

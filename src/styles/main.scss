@@ -1,302 +1,303 @@
-.twitch-note-container {
-  position: fixed;
-  z-index: 1000000;
-  min-width: 420px;
-  max-width: 95vw;
-  min-height: 240px;
-  max-height: 50vh;
-  background: var(--color-background-base);
-  border: var(--border-width-default) solid var(--color-border-base) !important;
-}
+.twitch-notes {
 
-.twitch-note-header {
-  width: 100%;
-  height: 32px;
-  line-height: 32px;
-  border-bottom: var(--border-width-default) solid var(--color-border-base) !important;
-  position: relative;
-  cursor: move;
-}
+  &_button {
+    z-index: var(--z-index-default) !important;
+    position: relative !important;
+    background-color: var(--color-background-button-primary-default);
+    color: var(--color-text-button-primary);
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    user-select: none;
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--border-radius-medium);
+    font-size: var(--button-text-default);
+    height: var(--button-size-default);
+    padding: 0 var(--button-padding-x);
 
-.twitch-note-title {
-  color: var(--color-text-alt) !important;
-  font-size: var(--font-size-6) !important;
-  font-weight: var(--font-weight-semibold) !important;
-  text-transform: uppercase !important;
-  padding-left: calc((32px - var(--font-size-6)) / 2);
-}
+    &__outline {
+      background: transparent;
+      border: 2px solid var(--color-text-button-primary);
+    }
 
-.twitch-note-close-button {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-  text-align: center;
-  aspect-ratio: 1;
-  color: var(--color-text-alt) !important;
-  font-size: var(--font-size-6) !important;
-  font-weight: var(--font-weight-semibold) !important;
-  text-transform: uppercase !important;
-  cursor: pointer;
-}
-
-.twitch-note-content {
-  position: absolute;
-  top: 32px;
-  left: 0;
-  right: 0;
-  bottom: 32px;
-  background: transparent;
-  color: var(--color-text-base) !important;
-  font-family: var(--font-base);
-  vertical-align: baseline;
-  outline: none;
-  overflow: auto;
-  padding: calc((32px - var(--font-size-6)) / 2);
-}
-
-.twitch-note-save-button {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 32px;
-  border-top: var(--border-width-default) solid var(--color-border-base) !important;
-  cursor: pointer;
-  color: var(--color-text-alt) !important;
-  font-size: var(--font-size-6) !important;
-  font-weight: var(--font-weight-semibold) !important;
-  text-transform: uppercase !important;
-  text-align: center;
-  line-height: 32px;
-}
-
-.twitch-notes-settings-button {
-  z-index: var(--z-index-default) !important;
-  position: relative !important;
-  background-color: var(--color-background-button-primary-default);
-  color: var(--color-text-button-primary);
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-flex;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  vertical-align: middle;
-  overflow: hidden;
-  white-space: nowrap;
-  user-select: none;
-  font-weight: var(--font-weight-semibold);
-  border-radius: var(--border-radius-medium);
-  font-size: var(--button-text-default);
-  height: var(--button-size-default);
-  padding: 0 var(--button-padding-x);
-
-  &__outline {
-    background: transparent;
-    border: 2px solid var(--color-text-button-primary);
   }
-}
 
-.twitch-notes-settings-container {
-  border: 0;
-  font: inherit;
-  padding: 0;
-  vertical-align: baseline;
-  position: fixed;
-  z-index: var(--z-index-balloon);
-  inset: auto 0 0 auto;
-  margin: 0 69px 48px 0;
-}
+  &_close-button {
+    cursor: default;
+    text-transform: none;
+    text-indent: 0;
+    text-shadow: none;
+    letter-spacing: normal;
+    text-rendering: auto;
+    appearance: auto;
+    writing-mode: horizontal-tb !important;
+    box-sizing: border-box;
+    margin: 0;
+    font: inherit;
+    border: none;
+    font-size: var(--button-text-default);
+    font-weight: var(--font-weight-semibold);
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    white-space: nowrap;
+    position: absolute;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    user-select: none;
+    border-radius: var(--border-radius-medium);
+    height: calc(var(--button-size-default) - 1rem);
+    width: calc(var(--button-size-default) - 1rem);
+    background-color: var(--color-background-button-text-default);
+    color: var(--color-fill-button-icon);
+    top: 1rem;
+    right: 1rem;
 
-.twitch-notes-settings-balloon {
-  display: inline-block;
-  max-width: 90vw;
-  min-width: 0;
-  white-space: nowrap;
-  border-radius: 0.6rem !important;
-  background-color: var(--color-background-base) !important;
-  box-shadow: var(--shadow-elevation-2) !important;
-  color: inherit !important;
-}
+    .twitch-notes_x-button {
+      position: absolute;
+      left: 0;
+      width: calc(var(--button-size-default) - 1rem);
+      height: calc(var(--button-size-default) - 1rem);
+      top: 0;
+      fill: currentcolor;
+    }
+  }
 
-.twitch-notes-settings-popover {
-  white-space: normal;
-  width: 32rem;
-}
+  &-floating-container {
+    position: fixed;
+    z-index: 1000000;
+    width: 320px;
+    height: 240px;
+    background: var(--color-background-base);
+    border: var(--border-width-default) solid var(--color-border-base) !important;
+  }
 
-.twitch-notes-settings-header {
-  display: flex !important;
-  -webkit-box-align: center !important;
-  align-items: center !important;
-  position: relative !important;
-  padding-left: 1rem !important;
-  padding-right: 1rem !important;
-  background-color: var(--color-background-base) !important;
-  min-height: 4rem;
-}
+  &-container {
+    position: fixed;
+    z-index: 1000000;
+    min-width: 500px;
+    max-width: 95vw;
+    min-height: 240px;
+    max-height: 50vh;
+    background: var(--color-background-base);
+    border: var(--border-width-default) solid var(--color-border-base) !important;
 
-.twitch-notes-settings-header-left-element {
-  left: 0 !important;
-  margin-right: 0.5rem !important;
-  width: 3rem;
-}
+    &-header {
+      width: 100%;
+      height: calc(var(--button-size-default) + 1rem);
+      line-height: calc(var(--button-size-default) + 1rem);
+      border-bottom: var(--border-width-default) solid var(--color-border-base) !important;
+      position: relative;
 
-.twitch-notes-settings-header-center-element {
-  -webkit-box-align: center !important;
-  align-items: center !important;
-  display: flex !important;
-  text-align: center !important;
-  -webkit-box-flex: 1 !important;
-  flex-grow: 1 !important;
-  -webkit-box-pack: center !important;
-  justify-content: center !important;
-}
+      &-title {
+        color: var(--color-text-alt) !important;
+        font-size: var(--font-size-6) !important;
+        font-weight: var(--font-weight-semibold) !important;
+        text-transform: uppercase !important;
+        margin-left: calc((32px - var(--font-size-6)) / 2);
+        width: calc(100% - 2rem);
+      }
+    }
 
-.twitch-notes-settings-header-center-element-content {
-  line-height: 1.5;
-  color: var(--color-text-alt) !important;
-  font-size: var(--font-size-5) !important;
-  font-weight: var(--font-weight-semibold) !important;
-}
+    &-content {
+      display: grid;
+      grid-template-columns: 240px 1fr;
 
 
-.twitch-notes-settings-header-right-element {
-  right: 0 !important;
-  margin-left: 0.5rem !important;
-}
+      &-user-list {
+        border-right: 1px solid #FFFFFF19;
+        height: 100%;
+        min-width: 240px;
+        overflow-y: auto;
+        overflow-x: hidden;
 
-.twitch-notes-settings-close-button {
-  cursor: default;
-  text-transform: none;
-  text-indent: 0;
-  text-shadow: none;
-  letter-spacing: normal;
-  text-rendering: auto;
-  appearance: auto;
-  writing-mode: horizontal-tb !important;
-  box-sizing: border-box;
-  margin: 0;
-  font: inherit;
-  border: none;
-  font-size: var(--button-text-default);
-  font-weight: var(--font-weight-semibold);
-  vertical-align: middle;
-  overflow: hidden;
-  text-decoration: none;
-  white-space: nowrap;
-  position: relative;
-  display: inline-flex;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  user-select: none;
-  border-radius: var(--border-radius-medium);
-  height: calc(var(--button-size-default) - 1rem);
-  width: calc(var(--button-size-default) - 1rem);
-  background-color: var(--color-background-button-text-default);
-  color: var(--color-fill-button-icon);
-}
 
-.twitch-notes-settings-scrollable-area {
-  display: flex;
-  overflow: hidden;
-  z-index: 0;
-  height: 100%;
-  position: relative;
-  max-height: 478px;
-}
+        &-item {
+          padding: 1rem;
+          border-bottom: var(--border-width-default) solid var(--color-border-base) !important;
+          cursor: pointer;
+          width: 100%;
+          color: var(--color-text-alt) !important;
+          font-size: var(--font-size-6) !important;
+          font-weight: var(--font-weight-semibold) !important;
+          text-transform: uppercase !important;
 
-.twitch-notes-settings-content {
-  box-sizing: content-box;
-  min-width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  max-height: inherit !important;
-  margin: 1rem;
-  padding-bottom: 0 !important;
-}
+          &-search {
+            background: transparent;
+            outline: none;
+            color: var(--color-fill-button-icon);
+          }
+        }
+      }
 
-.twitch-notes-settings-option-line {
-  position: relative !important;
-  width: calc(100% - 2rem) !important;
-}
+      &-note-container {
 
-.twitch-notes-settings-option-line-button {
-  border-radius: var(--border-radius-medium);
-  display: block;
-  width: 100%;
-  color: inherit;
-}
+        &-note {
+          min-width: 420px;
+          min-height: 320px;
+          display: block;
+          margin: 1rem;
+          border: var(--border-width-default) solid var(--color-border-base) !important;
+          padding: 1rem;
+        }
 
-.twitch-notes-settings-option-line-button:hover {
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  background-color: var(--color-background-interactable-hover);
-}
+        &-controls {
+          padding: 1rem;
+          display: flex;
+          align-content: center;
 
-.twitch-notes-settings-option-line-button-container {
-  display: flex !important;
-  -webkit-box-align: center !important;
-  align-items: center !important;
-  position: relative !important;
-  padding: 0.5rem !important;
-}
+          &-saved {
+            color: green;
+            padding-left: 1rem;
+            line-height: var(--button-size-default);
+          }
+        }
+      }
+    }
 
-.twitch-notes-settings-option-line-button-container-content {
-  -webkit-box-flex: 1 !important;
-  flex-grow: 1 !important;
-}
+    &-footer {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      width: 100%;
+      border-top: var(--border-width-default) solid var(--color-border-base) !important;
+      padding: 1rem;
+      text-align: center;
+    }
+  }
 
-.twitch-note-settings-separator {
-  border-top: 1px solid var(--color-border-base);
-  margin-top: 1rem !important;
-  margin-left: 0.5rem !important;
-  margin-right: 0.5rem !important;
-  padding-bottom: 1rem !important;
-}
+  &-header {
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    border-bottom: var(--border-width-default) solid var(--color-border-base) !important;
+    position: relative;
+    cursor: move;
+  }
 
-.twitch-notes-x-button {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  min-height: 100%;
-  top: 0;
-  fill: currentcolor;
-}
+  &--container-header-title {
+    color: var(--color-text-alt) !important;
+    font-size: var(--font-size-6) !important;
+    font-weight: var(--font-weight-semibold) !important;
+    text-transform: uppercase !important;
+    padding-left: calc((32px - var(--font-size-6)) / 2);
+  }
 
-.twitch-notes-blurred-background {
-  position: fixed;
-  inset: 0 0 0 0;
-  z-index: 2000000;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(2px);
-}
+  &-title {
+    color: var(--color-text-alt) !important;
+    font-size: var(--font-size-6) !important;
+    font-weight: var(--font-weight-semibold) !important;
+    text-transform: uppercase !important;
+    padding-left: calc((32px - var(--font-size-6)) / 2);
+  }
 
-.twitch-notes-center-floating-container {
-  background: var(--color-background-base);
-  border: var(--border-width-default) solid var(--color-border-base) !important;
-  padding: 4rem 2rem 2rem;
-  position: fixed;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
-  max-height: 90vh;
-  max-width: 90vw;
-  overflow: auto;
-}
+  &-close-button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    aspect-ratio: 1;
+    color: var(--color-text-alt) !important;
+    font-size: var(--font-size-6) !important;
+    font-weight: var(--font-weight-semibold) !important;
+    text-transform: uppercase !important;
+    cursor: pointer;
+  }
 
-.twitch-notes-user-list-user {
-  padding: 1rem;
-  border-bottom: var(--border-width-default) solid var(--color-border-base) !important;
-  cursor: pointer;
-}
+  &-content {
+    position: absolute;
+    top: 32px;
+    left: 0;
+    right: 0;
+    bottom: 32px;
+    background: transparent;
+    color: var(--color-text-base) !important;
+    font-family: var(--font-base);
+    vertical-align: baseline;
+    outline: none;
+    overflow: auto;
+    padding: calc((32px - var(--font-size-6)) / 2);
+  }
 
-.twitch-notes-user-list-user[data-active] {
-  background: #772ce833;
+  &-save-button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    border-top: var(--border-width-default) solid var(--color-border-base) !important;
+    cursor: pointer;
+    color: var(--color-text-alt) !important;
+    font-size: var(--font-size-6) !important;
+    font-weight: var(--font-weight-semibold) !important;
+    text-transform: uppercase !important;
+    text-align: center;
+    line-height: 32px;
+  }
+
+  &-x-button {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    top: 0;
+    fill: currentcolor;
+  }
+
+  &-blurred-background {
+    position: fixed;
+    inset: 0 0 0 0;
+    z-index: 2000000;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+  }
+
+  &-center-floating-container {
+    background: var(--color-background-base);
+    border: var(--border-width-default) solid var(--color-border-base) !important;
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    min-height: 320px;
+    min-width: 300px;
+    max-height: 90vh;
+    max-width: 90vw;
+    overflow: auto;
+  }
+
+  &-link {
+    display: inline-block;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: var(--color-text-link) !important;
+    line-height: var(--line-height-heading) !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: normal !important;
+    font-weight: var(--font-weight-semibold) !important;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  &-grid-col-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
 }

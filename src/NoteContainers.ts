@@ -1,17 +1,17 @@
 import HTMLBuilder from "./HTMLBuilder";
 
-const containers: {[key: string]: HTMLBuilder} = {};
+export default class NoteContainers {
+    static activeContainer: string | null = null;
+    static containers: { [key: string]: HTMLBuilder } = {};
 
-export default {
-    activeContainer: '',
-    containers,
-    addContainer(username: string, container: HTMLBuilder) {
-        if (this.containers[username]) return;
-        this.containers[username] = container;
-    },
-    removeContainer(username: string) {
-        if (!this.containers[username]) return;
-        this.containers[username].remove();
-        delete this.containers[username];
-    }
+    static addContainer(username: string, container: HTMLBuilder) {
+        if (NoteContainers.containers[username]) return;
+        NoteContainers.containers[username] = container;
+    };
+
+    static removeContainer(username: string) {
+        if (!NoteContainers.containers[username]) return;
+        NoteContainers.containers[username].remove();
+        delete NoteContainers.containers[username];
+    };
 }
