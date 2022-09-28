@@ -1,6 +1,6 @@
 {
   "name": "twitchnotes",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Add notes to twitch users (only visible to you)",
   "main": "index.js",
   "scripts": {

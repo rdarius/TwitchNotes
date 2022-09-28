@@ -4,6 +4,7 @@ const path = require('path');
 
 module.exports = {
     mode: 'production',
+    devtool: 'source-map',
     entry: {
         twitchNotes: path.resolve(__dirname, 'src/index.ts'),
     },
@@ -41,5 +42,5 @@ module.exports = {
     },
     resolve: {
         extensions: ['.ts', '.js'],
-    },
+    }
 }

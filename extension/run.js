@@ -13,14 +13,4 @@
         script.id = "twitchNotesScript";
         head.appendChild(script);
     }
-
-    // if (!document.querySelector("style#twitchNotesStyle")) {
-    //   const style = document.createElement("link");
-    //   style.setAttribute("href", chrome.runtime.getURL("twitch-notes.css"));
-    //   style.setAttribute("type", "text/css");
-    //   style.setAttribute("rel", "stylesheet");
-    //   style.setAttribute("crossorigin", "anonymous");
-    //   style.id = "twitchNotesStyle";
-    //   head.appendChild(style);
-    // }
 })();

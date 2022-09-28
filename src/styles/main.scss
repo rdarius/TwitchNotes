@@ -88,7 +88,7 @@
     min-width: 500px;
     max-width: 95vw;
     min-height: 240px;
-    max-height: 50vh;
+    max-height: 80vh;
     background: var(--color-background-base);
     border: var(--border-width-default) solid var(--color-border-base) !important;
 
@@ -117,6 +117,7 @@
       &-user-list {
         border-right: 1px solid #FFFFFF19;
         height: 100%;
+        max-height: calc(80vh - 2 * var(--button-size-default) + 1rem);
         min-width: 240px;
         overflow-y: auto;
         overflow-x: hidden;
